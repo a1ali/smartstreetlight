@@ -26,6 +26,7 @@ and IoT is in Ohio
 * send_mms.py
 * credentials.py
 * awsiotcoreRpi_with_OpenCV.py
+* car2.xml
 
 ---------------
 
