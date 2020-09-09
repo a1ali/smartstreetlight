@@ -49,7 +49,7 @@ print('publishing message  from RPi')
 myMQTTClient.publish(
     topic='home/helloworld',
     QoS=1,
-    payload="{'Message':'Sent from rpi}"
+    payload="{'message':'Sent from rpi}"
     )  # this is the function to publish to a topic
 '''
 while True:
