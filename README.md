@@ -6,7 +6,7 @@ and IoT is in Ohio
 <h1>--File Structure--</h1>
 
 ---ON Server--- <br>
-Run rx_messAWS.py
+Run - rx_messAWS.py
 
 * rx_messAWS.py
 * certificate.pem.crt
@@ -17,7 +17,7 @@ Run rx_messAWS.py
 
 ---------------
 ----ON RPI----- <br>
-Run awsiotcoreRpi_with_OpenCV.py
+Run - awsiotcoreRpi_with_OpenCV.py
 
 * /images
 * certificate.pem.crt
