@@ -7,24 +7,24 @@ and IoT is in Ohio
 
 ---ON Server---
 
-rx_messAWS.py
-certificate.pem.crt
-root-ca.pem.txt
-private.pem.key
-send_mms.py
-credentials.py
+* rx_messAWS.py
+* certificate.pem.crt
+* root-ca.pem.txt
+* private.pem.key
+* send_mms.py
+* credentials.py
 
 ---------------
 ----ON RPI-----
 
-/images
-certificate.pem.crt
-root-ca.pem.txt
-private.pem.key
-upload_img_s3.py
-secrets.py
-send_mms.py
-credentials.py
+* /images
+* certificate.pem.crt
+* root-ca.pem.txt
+* private.pem.key
+* upload_img_s3.py
+* secrets.py
+* send_mms.py
+* credentials.py
 
 ---------------
 
