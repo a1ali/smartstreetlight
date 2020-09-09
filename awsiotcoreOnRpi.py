@@ -1,3 +1,11 @@
+'''
+Same file but not OpenCV
+Use the other one with OpenCV
+
+'''
+
+
+
 import time
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import json
@@ -49,7 +57,7 @@ print('publishing message  from RPi')
 myMQTTClient.publish(
     topic='home/helloworld',
     QoS=1,
-    payload="{'Message':'Sent from rpi}"
+    payload="{'message':'Sent from rpi}"
     )  # this is the function to publish to a topic
 '''
 while True:

@@ -1,11 +1,15 @@
 from flask import Flask, request, jsonify
 from twilio.twiml.messaging_response import MessagingResponse
-from get_dog import get_dog_url
+#from get_dog import get_dog_url
 from send_mms import send_sms
 
 import time
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
+import json
 
+
+
+payload = {'message': 'off', 'takepic': 'false', 'from': None, 'motion_detected': 'false'} #payload skeleton gonna just redefine it in all funtions 
 
 #this functions is the response function to an MQTT message it is manadatory to have in the myMQTTClient.subscribe
 def helloworld(self, params, packet):
@@ -39,17 +43,24 @@ myMQTTClient.publish(
     payload="{'Message: from computer'}" #the payload must be in JSON format to be able to be used. DO NOT FORGET!!!
 )
 '''
+
+
 #function to publish a turn on message 
 def ledon():
-    mes = {
-        "message": "on"
-    }
-    message = json.dumps(mes)
+    #global payload
+    '''
+    payload['message'] = 'on'
+    payload['takepic'] = 'false'
+    payload['from'] = None
+    payload['motion_detected'] = 'false'
+    '''
+    payload = {'message': 'on', 'takepic': 'false', 'from': None, 'motion_detected': 'false'} #getting str errors just redefine 
+    payload = json.dumps(payload)
+
     myMQTTClient.publish(
     topic='home/helloworld',
     QoS=1,
-    #payload='{"message": "on"}'
-    payload=jsonify(message='on')
+    payload=payload
     )
     #print('sending led on ')
     #print(message)
@@ -57,11 +68,37 @@ def ledon():
 
 #function to publish turn off message
 def ledoff():
+    #global payload
+    '''
+    payload['message'] = 'off'
+    payload['takepic'] = 'false'
+    payload['from'] = None
+    payload['motion_detected'] = 'false'
+    '''
+    payload = {'message': 'off', 'takepic': 'false', 'from': None, 'motion_detected': 'false'} #getting str errors just redefine 
+    payload = json.dumps(payload)
 
     myMQTTClient.publish(
     topic='home/helloworld',
     QoS=1,
-    payload='{"message": "off"}'
+    payload=payload
+    )
+    return ""
+
+def takepic(from_cell):
+    #global payload
+    '''
+    payload['message'] = 'off'
+    payload['takepic'] = 'true'
+    payload['from'] = x['From']
+    payload['motion_detected'] = 'false'
+    '''
+    payload = {'message': 'off', 'takepic': 'true', 'from': from_cell, 'motion_detected': 'false'} #getting str errors just redefine 
+    payload = json.dumps(payload)
+    myMQTTClient.publish(
+    topic='home/helloworld',
+    QoS=1,
+    payload=payload
     )
     return ""
 
@@ -100,20 +137,14 @@ def sms_ahoy_reply():
         send_sms(get_dog_url(),x['From'] )
         
     elif message == 'on':
-        #message = json.dumps(mes)
-        myMQTTClient.publish(
-        topic='home/helloworld',
-        QoS=1,
-        payload='{"message": "on"}'
-        #payload=jsonify(message='on')
-        )
-        
+        ledon()
+
     elif message == 'off':
-        myMQTTClient.publish(
-        topic='home/helloworld',
-        QoS=1,
-        payload='{"message": "off"}'
-        )
+        ledoff()
+
+    elif message == 'pic':
+        takepic(x['From']) #have to pass user cell number
+
     
     
 

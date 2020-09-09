@@ -13,5 +13,6 @@ def send_sms(url, from_num):
              media_url=[url],
              to=from_num
          )
+    print('message Sent')
 
     #print(message.sid)

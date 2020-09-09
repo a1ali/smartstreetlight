@@ -9,30 +9,32 @@ import os
 s3 = boto3.resource('s3', aws_access_key_id = access_key, aws_secret_access_key = secret_access_key)
 
 
-for files in os.listdir('./images'):
+def upload_img():
+    for files in os.listdir('./images'):
+
+        uplaod_file_bucket = 'smartstreetlight' #our s3 bucket 
+        upload_file_key = 'images/' + str(files) #we are gonna put the file within a folder in our bucket called images
+
+        #s3.Bucket('uplaod_file_bucket').put_object(Key='upload_file_key', Body=files, ContentType='jpg/png', ACL='public-read') #did not work
+        #s3.Bucket(uplaod_file_bucket).put_object(Key=upload_file_key, Body=files, ContentType='image/png', ACL='public-read') #did not work
+        #client.upload_file('images/' + files, uplaod_file_bucket, upload_file_key) #did not work
     
-    uplaod_file_bucket = 'smartstreetlight' #our s3 bucket 
-    upload_file_key = 'images/' + str(files) #we are gonna put the file within a folder in our bucket called images
+        s3.meta.client.upload_file(upload_file_key, uplaod_file_bucket, upload_file_key, ExtraArgs={'ContentType': "image/png", 'ACL': "public-read"} )
+        #the format of upload_file is upload_file(Filename, Bucket, Key, ExtraArgs=None, Callback=None, Config=None)
 
-    #s3.Bucket('uplaod_file_bucket').put_object(Key='upload_file_key', Body=files, ContentType='jpg/png', ACL='public-read') #did not work
-    #s3.Bucket(uplaod_file_bucket).put_object(Key=upload_file_key, Body=files, ContentType='image/png', ACL='public-read') #did not work
-    #client.upload_file('images/' + files, uplaod_file_bucket, upload_file_key) #did not work
- 
-    s3.meta.client.upload_file(upload_file_key, uplaod_file_bucket, upload_file_key, ExtraArgs={'ContentType': "image/png", 'ACL': "public-read"} )
-    #the format of upload_file is upload_file(Filename, Bucket, Key, ExtraArgs=None, Callback=None, Config=None)
+        #for twilio to work you must send a acceptable content type they only accept the forms jpg, png, gif. 
+        #by default aws s3 sets the content type to binary/octet-stream need to change this using the extraargs and passing custom content type
+        #for jpeg/jpg use 'ContentType': "image/jpeg"
 
-    #for twilio to work you must send a acceptable content type they only accept the forms jpg, png, gif. 
-    #by default aws s3 sets the content type to binary/octet-stream need to change this using the extraargs and passing custom content type
-    #for jpeg/jpg use 'ContentType': "image/jpeg"
+        #an example url https://smartstreetlight.s3.amazonaws.com/images/car.png 
+        #smartstreetlight is our bucket name
 
-    #an example url https://smartstreetlight.s3.amazonaws.com/images/car.png 
-    #smartstreetlight is our bucket name
+        url = f'https://s3.amazonaws.com/{uplaod_file_bucket}/{upload_file_key}'
 
-    url = f'https://s3.amazonaws.com/{uplaod_file_bucket}/{upload_file_key}'
-
-    print('uploaded image')
-    print('\n')
-    print(url)
+        print('uploaded image')
+        #print('\n')
+        #print(url)
+        return url
 
 
 
