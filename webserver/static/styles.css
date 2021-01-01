@@ -1,0 +1,87 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
+* {
+    padding: 0;
+    margin: 0px;
+}
+
+
+body {
+    background-image: url('back5.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: black;
+}
+
+.title {
+    text-align: center;
+    padding-top: 4%;
+    padding-bottom: 5%;
+    font-family: "Playfair Display", sans-serif ;
+    font-size: 60px;
+    font-weight: 100;
+    color: whitesmoke;
+}
+
+.names {
+    text-align: center;
+    font-size: 30px;
+    font-family: "Playfair Display", sans-serif ;
+    font-weight: 100;
+    color: whitesmoke;
+    padding-top: 1%;
+}
+p {
+    text-align: center;
+    font-size: 40px;
+    font-family: "Playfair Display", sans-serif ;
+    font-weight: 100;
+    color: whitesmoke;
+    padding-top: 2%;
+}
+
+.list{
+    padding-top: 1px;
+    
+}
+
+ul {
+    padding-bottom: 10%;
+}
+.button {
+    display: flex;
+    justify-content: center;
+    padding-top: 5%;
+    
+
+}
+button {
+    padding: 15px 20px;
+    border-radius: 50px;
+    border-width: 0px;
+    font-family:  "Open Sans Condensed", sans-serif;
+    font-size: 20px;
+    box-shadow: 0px 5px 10px 2px dimgray;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    outline: none;
+}
+
+button:hover {
+    background-color: rgb(190, 190, 190);
+    outline: none;
+}
+
+button:active {
+    box-shadow: none;
+    transform: translateY(3px);
+    border: none;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+
+}
