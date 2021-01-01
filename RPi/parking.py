@@ -1,21 +1,5 @@
 '''
-
-Added OpenCv detection and taking a picture when the takepic key is set to on from aws iot
-the image will save in images and its name will be c1.png 
-
-in the end our mqtt message will be given as 
-
-{
-  "from": "senders phone number",
-  "message": "off",
-  "takepic": "false",
-  "motion_detected": "true/false"
-}
-
-
-https://stackoverflow.com/questions/53137197/importing-opencv-in-python-idle-error-shared-object-file/60237868#60237868 #how to get OpenCv on Rpi
-https://github.com/amymcgovern/pyparrot/issues/34 #dependencies to install to get OpenCV to work
-https://github.com/priya-dwivedi/Deep-Learning/tree/master/parking_spots_detector #sample parking code
+Source for Haar Cascade: https://github.com/abhi-kumar/CAR-DETECTION
 
 '''
 
@@ -46,11 +30,11 @@ def helloworld(self, params, packet):
     mypayload = json.loads(packet.payload)
     print(mypayload)
     
-    if mypayload['message'] == 'on':
+    if mypayload['message'] == 'on': #test led on
         print('led on')
-        GPIO.output(18,GPIO.HIGH)
+        GPIO.output(18,GPIO.HIGH) 
 
-    if mypayload['message'] == 'off':
+    if mypayload['message'] == 'off': #test led off
         print('led off')
         GPIO.output(18,GPIO.LOW)
 
@@ -69,7 +53,7 @@ def helloworld(self, params, packet):
 myMQTTClient = AWSIoTMQTTClient("clientidrpi") #tandom key can be anything
 # For TLS mutual authentication
 myMQTTClient.configureEndpoint("a2fj01nuikd9c7-ats.iot.us-east-2.amazonaws.com", 8883) #Provide your AWS IoT Core endpoint (Example: "abcdef12345-ats.iot.us-east-1.amazonaws.com")
-myMQTTClient.configureCredentials("/home/pi/awsiot/root-ca.pem", "/home/pi/awsiot/private.pem.key", "/home/pi/awsiot/certificate.pem.crt") #Set path for Root CA and provisioning claim credentials
+myMQTTClient.configureCredentials("root-ca.pem.txt", "private.pem.key", "certificate.pem.crt") #Set path for Root CA and provisioning claim credentials
 myMQTTClient.configureOfflinePublishQueueing(-1)
 myMQTTClient.configureDrainingFrequency(2)
 myMQTTClient.configureConnectDisconnectTimeout(10)
@@ -80,16 +64,7 @@ myMQTTClient.connect()
 
 myMQTTClient.subscribe('home/helloworld', 1, helloworld)
 
-#print('publishing message  from RPi')
 
-'''
-myMQTTClient.publish(
-    topic='home/helloworld',
-    QoS=1,
-    payload='{"message":"Sent from rpi"}'
-    )  # this is the function to publish to a topic
-
-'''
 
 cap = cv2.VideoCapture(0)
 car_cascade = cv2.CascadeClassifier('car2.xml') 
@@ -119,7 +94,7 @@ while True:
     if cv2.waitKey(33) == 27: 
         break
   
-# De-allocate any associated memory usage 
+
 cv2.destroyAllWindows()
 GPIO.cleanup()
 
