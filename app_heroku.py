@@ -1,6 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, stream_with_context, Response
 from twilio.twiml.messaging_response import MessagingResponse
-#from get_dog import get_dog_url
 from send_mms import send_sms
 
 import time
@@ -28,14 +27,11 @@ myMQTTClient.configureCredentials("root-ca.pem.txt", "private.pem.key", "certifi
 myMQTTClient.configureOfflinePublishQueueing(-1)
 myMQTTClient.configureDrainingFrequency(2)
 myMQTTClient.configureConnectDisconnectTimeout(10)
-myMQTTClient.configureMQTTOperationTimeout(5)
+myMQTTClient.configureMQTTOperationTimeout(2)
  
 print('Initiating Iot Core Topic')
 myMQTTClient.connect() #important connection call to AWS
 
-
-#myMQTTClient.subscribe('home/helloworld', 1, helloworld) #the format of subscribing is (topic, 1, function)
-#print('sending mess')
 '''
 myMQTTClient.publish(
     topic='home/helloworld',
@@ -112,10 +108,7 @@ def sms_ahoy_reply():
     #start the responsse
     resp = MessagingResponse() #this is twilio response initializing 
     x = request.form.to_dict() #take a request to our webserver and turn it into python dict
-    print(x)
-    print('\n')
-    print(x['Body']) #the message will be in the body key.
-    print(f"from {x['From']}")
+
 
     message = x['Body'].lower() #turn the message to lower case 
     message = ''.join(message.split()) # sometimes the user puts extra spaces and we have to trip them 
@@ -146,32 +139,17 @@ def sms_ahoy_reply():
         takepic(x['From']) #have to pass user cell number
 
     
-    
-
-    print(message)
-
-    #Add a message
-    #resp.message(body) #thsi is to send the sms by responsing to client
 
     return ""  
 
-
+@app.route('/')
+def main():
+    def generate_output():
+        yield render_template('index.html')
+    return Response(stream_with_context(generate_output()))
 
 if __name__ == "__main__":
     app.run(debug=True)
 
+# Website: https://smartstreetlight.herokuapp.com/
 
-
-
-
-
-
-
-
-    '''
-so to run this program we take advantage of flask and serveo.net we use the command 
-
-ssh -o ServerAliveInterval=30 -R smartstreetlightaa.serveo.net:80:127.0.0.1:5000 serveo.net
-
-to create a server that can then allow us to forward all requests to it 
-    '''
