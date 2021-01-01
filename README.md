@@ -10,7 +10,21 @@ Project design focuses on improving on the power management system of the  stree
 4. LED Brightness control: This will ensure that in the absence of people or vehicles on the  street, the LEDs brightness will be dimmed. </br>
 5. Energy efficient: By having the feature to brighten and dim the streetlights when needed, the amount of energy needed to power the streetlights will decrease. In addition, with the  help of our smart parking feature, it will take a significantly less amount of time to find  parking, resulting in less pollution created by cars. </br>
 
-<h1>Block Diagram of Design</h1>
+<h2>Block Diagram of Design</h2>
+<img src="Images/block_diagram.PNG">
+
+</br>
+<h2>Block Diagram of Parking Application</h2>
+<img src="Images/block_diagram_parking.PNG">
+</br>
+<h2>Wiring</h2>
+<img src="Images/wiring.PNG">
+</br>
+<h2>Final Build</h2>
+<img src="Images/final_build.PNG">
+</br>
+<h2>Example MMS Message</h2>
+<img src="Images/example_detection.PNG">
 
 
 
