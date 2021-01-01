@@ -1,0 +1,6 @@
+AWSIoTPythonSDK==1.4.9
+Flask==1.1.1
+gunicorn==20.0.4
+twilio==6.41.0
+pigpio==1.78
+RPi.GPIO==0.7.0
